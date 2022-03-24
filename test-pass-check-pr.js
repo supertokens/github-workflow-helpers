@@ -10,13 +10,11 @@ let startTime = Date.now();
 
 function doJob() {
     console.log(
-        ```
-        Environment Variables:
+        `Environment Variables:
         - REPO: ${process.env.REPO}
         - BRANCH: ${process.env.BRANCH}
         - SOURCE OWNER: ${process.env.SOURCE}
-        - CURRENT_SHA: ${process.env.CURRENT_SHA}\n
-        ```
+        - CURRENT_SHA: ${process.env.CURRENT_SHA}\n`
     )
     console.log("Checking job status...");
 
