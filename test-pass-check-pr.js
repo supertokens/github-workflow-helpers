@@ -13,7 +13,7 @@ function doJob() {
         `Environment Variables:
         - REPO: ${process.env.REPO}
         - BRANCH: ${process.env.BRANCH}
-        - SOURCE OWNER: ${process.env.SOURCE}
+        - SOURCE_OWNER: ${process.env.SOURCE_OWNER}
         - CURRENT_SHA: ${process.env.CURRENT_SHA}\n`
     )
     console.log("Checking job status...");
