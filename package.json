@@ -1,0 +1,23 @@
+{
+  "name": "github-workflow-helpers",
+  "version": "1.0.0",
+  "description": "Helper scripts for Github Actions used in all supertokens-repositories",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/supertokens/github-workflow-helpers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/supertokens/github-workflow-helpers/issues"
+  },
+  "homepage": "https://github.com/supertokens/github-workflow-helpers#readme",
+  "dependencies": {
+    "axios": "^0.26.1"
+  }
+}
