@@ -9,13 +9,6 @@ let gitHubToken = process.env.GITHUB_TOKEN;
 let startTime = Date.now();
 
 function doJob() {
-    console.log(
-        `Environment Variables:
-        - REPO: ${process.env.REPO}
-        - BRANCH: ${process.env.BRANCH}
-        - SOURCE_OWNER: ${process.env.SOURCE_OWNER}
-        - CURRENT_SHA: ${process.env.CURRENT_SHA}\n`
-    )
     console.log("Checking job status...");
 
     const currentOwnerAndRepoString = process.env.REPO;
@@ -83,5 +76,13 @@ function doJob() {
         setTimeout(doJob, 60000) // try again after 1 min.
     })
 }
+
+console.log(
+    `Environment Variables:
+    - REPO: ${process.env.REPO}
+    - BRANCH: ${process.env.BRANCH}
+    - SOURCE_OWNER: ${process.env.SOURCE_OWNER}
+    - CURRENT_SHA: ${process.env.CURRENT_SHA}\n`
+);
 
 doJob();
