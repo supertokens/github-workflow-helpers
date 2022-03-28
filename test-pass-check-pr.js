@@ -1,6 +1,5 @@
 const { default: axios } = require("axios");
 
-const linkToJob = "https://github.com/supertokens/supertokens-sql-plugin/actions/workflows/tests.yml";
 const testJobName = "Run tests";
 
 // this is an auto generated token for this action
@@ -22,6 +21,8 @@ function doJob() {
     const sourceRepoWithOwnerString = `${process.env.SOURCE_OWNER}/${
       currentOwnerAndRepoString.split("/")[1]
     }`;
+
+    const linkToJob = `https://github.com/${sourceRepoWithOwnerString}/actions/workflows/tests.yml`;
 
     axios.get(`https://api.github.com/repos/${sourceRepoWithOwnerString}/actions/runs?branch=${process.env.BRANCH}`, {
         headers: {
