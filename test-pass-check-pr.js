@@ -32,29 +32,35 @@ function doJob() {
     axios.get(apiURL, {
         headers: apiHeaders,
     }).then(async apiResult => {
-        function processData(result) {
-            let data = result.data;
+        function getWorkflowForCurrentSHA(result) {
             let currentSHA = process.env.CURRENT_SHA;
+            let data = result.data;
 
-            let foundActiveJob = false;
-            let success = false;
-            let failed = false;
-            console.log("Github API returned", data.workflow_runs.length, "jobs");
             if (currentSHA !== undefined) {
                 for (let i = 0; i < data.workflow_runs.length; i++) {
                     let run = data.workflow_runs[i];
-                    if (run.head_sha === currentSHA) {
-                        if (run.name === testJobName) {
-                            if (run.conclusion === "success") {
-                                success = true;
-                            } else if (run.conclusion === "failure") {
-                                failed = true;
-                            }
-                            if (run.status === "in_progress") {
-                                foundActiveJob = true;
-                            }
-                        }
+                    if (run.head_sha === currentSHA && run.name === testJobName) {
+                        return run;
                     }
+                }
+            }
+
+            return undefined;
+        }
+
+        function processData(workflow) {
+            let foundActiveJob = false;
+            let success = false;
+            let failed = false;
+
+            if (workflow !== undefined) {
+                if (workflow.conclusion === "success") {
+                    success = true;
+                } else if (workflow.conclusion === "failure") {
+                    failed = true;
+                }
+                if (workflow.status === "in_progress") {
+                    foundActiveJob = true;
                 }
             }
 
@@ -85,17 +91,20 @@ function doJob() {
             }
         }
 
-        if (apiResult.data.workflow_runs.length === 0) {
+        let workflow = getWorkflowForCurrentSHA(apiResult);
+
+        if (workflow === undefined) {
             const backupApiURL = `https://api.github.com/repos/${sourceRepoWithOwnerString}/actions/runs?head_branch=${process.env.BRANCH}`
             console.log("Primary API returned no jobs, trying backup API on", backupApiURL, "...");
 
             axios.get(backupApiURL, {
                 headers: apiHeaders,
             }).then(backupAPIResult => {
-                processData(backupAPIResult);
+                let backupWorkflow = getWorkflowForCurrentSHA(backupAPIResult);
+                processData(backupWorkflow);
             })
         } else {
-            processData(apiResult);
+            processData(workflow)
         }
     }).catch((e) => {
         console.log(e);
