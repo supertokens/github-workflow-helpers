@@ -85,7 +85,7 @@ function doJob() {
             }
         }
 
-        if (result.data.workflow_runs.length === 0) {
+        if (apiResult.data.workflow_runs.length === 0) {
             const backupApiURL = `https://api.github.com/repos/${sourceRepoWithOwnerString}/actions/runs?head_branch=${process.env.BRANCH}`
             console.log("Primary API returned no jobs, trying backup API on", backupApiURL, "...");
 
